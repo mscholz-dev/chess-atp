@@ -1,0 +1,63 @@
+.chess-history {
+  $self: &;
+  align-items: center;
+  background: $tertiary-color;
+  border-bottom: 1px solid $secondary-color;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  transition: all 0.15s $cubic-bezier-hover;
+  width: 100%;
+
+  &:hover {
+    background: $tertiary-color-dark;
+    border-bottom: 1px solid $white;
+
+    #{$self}-name {
+      color: $white;
+    }
+  }
+
+  &-icon {
+    display: none;
+
+    @include responsive(s) {
+      display: flex;
+      height: 18px;
+      margin-right: 12px;
+      width: 18px;
+
+      path {
+        fill: $yellow;
+      }
+    }
+  }
+
+  &-name {
+    @extend %text-primary;
+    color: $secondary-color;
+    margin-right: 12px;
+    overflow: hidden;
+    max-height: 40px;
+    text-overflow: ellipsis;
+    transition: all 0.15s $cubic-bezier-hover;
+    width: calc(50% - 50px);
+  }
+
+  &-score {
+    @extend %text-primary;
+    color: $secondary-color;
+    display: flex;
+    justify-content: center;
+    transition: all 0.15s $cubic-bezier-hover;
+    width: 61px;
+
+    &-win {
+      color: $green;
+    }
+
+    &-loose {
+      color: $red;
+    }
+  }
+}

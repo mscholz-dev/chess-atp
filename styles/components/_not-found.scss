@@ -1,0 +1,24 @@
+.not-found {
+  padding: 64px 32px;
+  margin: 0 auto;
+  max-width: 440px;
+
+  @include responsive(t) {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  &-title {
+    @extend %title-biggest;
+    color: $white;
+    margin-bottom: 48px;
+  }
+
+  &-text {
+    @extend %title-primary;
+    color: $white;
+    margin-bottom: 32px;
+  }
+}

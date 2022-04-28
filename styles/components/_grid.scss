@@ -1,0 +1,38 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  height: calc(100vw - 24px);
+  margin: 24px auto;
+  max-height: 700px;
+  max-width: 700px;
+  position: relative;
+  width: calc(100vw - 24px);
+
+  @include responsive(s-xl) {
+    height: calc(100vw - 129px);
+    width: calc(100vw - 129px);
+  }
+
+  @include responsive(t-xs) {
+    height: calc(100vw - 201px);
+    width: calc(100vw - 201px);
+  }
+
+  @include responsive(t-xl) {
+    height: calc(100vw - 387px);
+    width: calc(100vw - 387px);
+  }
+
+  @include responsive(d-xs) {
+    height: calc(100vw - 766px);
+    width: calc(100vw - 766px);
+  }
+
+  &-inverse {
+    transform: rotate(180deg);
+
+    .box {
+      transform: rotate(180deg);
+    }
+  }
+}

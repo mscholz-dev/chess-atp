@@ -1,0 +1,23 @@
+.webcam-client {
+  &-main {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.25s opacity $cubic-bezier-hover;
+    z-index: map-get($zindex, lvl0-2);
+  }
+
+  &-overlay {
+    background: $white;
+    border: 4px solid $white;
+    border-radius: 5px;
+    display: flex;
+    position: absolute;
+
+    &-inner {
+      border-radius: 5px;
+      display: flex;
+      overflow: hidden;
+    }
+  }
+}

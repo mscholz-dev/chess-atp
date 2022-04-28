@@ -1,0 +1,81 @@
+$breakpoints: (
+  s-xs: 375px,
+  s: 480px,
+  s-xl: 576px,
+  t-xs: 768px,
+  t-s: 800px,
+  t: 992px,
+  t-xl: 1024px,
+  d-xs: 1200px,
+  d: 1440px,
+  d-xl: 1920px,
+);
+
+$zindex: (
+  lvl-1: -1,
+  lvl0: 0,
+  lvl0-1: 1,
+  lvl0-2: 2,
+  lvl1: 10,
+  lvl2: 25,
+  lvl3: 50,
+  lvl4: 100,
+  lvl5: 110,
+  lvl-max: 9999,
+);
+
+$black: #000;
+$white: #fff;
+$green: #27ae60;
+$red: #d63031;
+$yellow: #fdcb6e;
+
+$transparent: #fff0;
+
+$primary-color-lighter: #fecefe;
+$primary-color-light: #f8b0f8;
+$primary-color: #df01a1;
+$primary-color-dark: #aa007a;
+
+$secondary-color: #e2e2e2;
+
+$tertiary-color-light: #6c5aaf;
+$tertiary-color: #1a162c;
+$tertiary-color-dark: #121128;
+
+$info: #007bc3;
+$alert: #f0a92d;
+$valid: #20a678;
+
+$box-shadow-light: 0 0.15rem 0.31rem 0.04rem rgba(0, 0, 0, 0.2);
+$box-shadow: 0 0.3rem 0.63rem 0.07rem rgba(0, 0, 0, 0.4);
+
+$cubic-bezier: cubic-bezier(0.12, 0.01, 0, 0.99);
+$cubic-bezier-smooth: cubic-bezier(0.34, 0.23, 0.4, 0.99);
+$cubic-bezier-hover: cubic-bezier(0.26, 0, 0.29, 1);
+
+$doc-general-img-path: "../../public/img/";
+
+$primary-font-regular: "Play-Regular";
+$primary-font-regular-path: "../../public/fonts/Play-Regular.ttf";
+
+$primary-font-bold: "Play-Bold";
+$primary-font-bold-path: "../../public/fonts/Play-Bold.ttf";
+
+$secondary-font: "Vermin-Vibes";
+$secondary-font-path: "../../public/fonts/Vermin-Vibes.ttf";
+
+@font-face {
+  font-family: $primary-font-regular;
+  src: url($primary-font-regular-path) format("truetype");
+}
+
+@font-face {
+  font-family: $primary-font-bold;
+  src: url($primary-font-bold-path) format("truetype");
+}
+
+@font-face {
+  font-family: $secondary-font;
+  src: url($secondary-font-path) format("truetype");
+}

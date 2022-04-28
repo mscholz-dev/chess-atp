@@ -1,0 +1,63 @@
+.toggle-input {
+  $self: &;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  padding: 7px 0;
+
+  &:hover {
+    #{$self}-container {
+      border: 2px solid $primary-color-dark;
+    }
+  }
+
+  &-container {
+    border: 2px solid $primary-color;
+    border-radius: 25px;
+    display: flex;
+    height: 30px;
+    position: relative;
+    transition: 0.25s all $cubic-bezier-smooth;
+    width: 50px;
+  }
+
+  &-input {
+    left: -100000px;
+    position: absolute;
+  }
+
+  &-circle {
+    background: $secondary-color;
+    border-radius: 50%;
+    height: 20px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    transition: 0.25s all $cubic-bezier-smooth;
+    width: 20px;
+  }
+
+  &-text {
+    @extend %text-main;
+    color: $secondary-color;
+    margin-left: 12px;
+    transition: 0.25s all $cubic-bezier-smooth;
+  }
+
+  &-checked {
+    #{$self} {
+      &-container {
+        background: $tertiary-color-dark;
+      }
+
+      &-circle {
+        background: $white;
+        left: 22px;
+      }
+
+      &-text {
+        color: $white;
+      }
+    }
+  }
+}

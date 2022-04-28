@@ -1,0 +1,117 @@
+.paging {
+  $self: &;
+  display: inline-flex;
+  justify-content: space-between;
+
+  &-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    width: 100%;
+  }
+
+  &-arrow {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+
+    &-circle {
+      align-items: center;
+      background: $tertiary-color;
+      border: 2px solid $primary-color;
+      border-radius: 50%;
+      display: flex;
+      height: 48px;
+      justify-content: center;
+      transition: 0.15s all $cubic-bezier-hover;
+      width: 48px;
+    }
+
+    &-icon {
+      align-items: center;
+      display: flex;
+      height: 12px;
+      justify-content: center;
+      width: 12px;
+
+      path {
+        fill: $white;
+      }
+    }
+
+    &-reverse {
+      transform: rotate(180deg);
+    }
+
+    &:hover {
+      #{$self} {
+        &-arrow-circle {
+          background: $primary-color;
+        }
+        &-text {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  &-text {
+    @extend %text-main;
+    color: $secondary-color;
+    transition: 0.15s all $cubic-bezier-hover;
+
+    &-left {
+      display: none;
+
+      @include responsive(s-xl) {
+        display: block;
+        margin-right: 12px;
+      }
+    }
+
+    &-right {
+      display: none;
+
+      @include responsive(s-xl) {
+        display: block;
+        margin-left: 12px;
+      }
+    }
+  }
+
+  &-number {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding: 6px;
+    position: relative;
+  }
+
+  &-current {
+    &:after {
+      background: $primary-color;
+      bottom: 0;
+      content: "";
+      height: 2px;
+      left: 0;
+      position: absolute;
+      transform: translateX(50%);
+      width: 50%;
+    }
+  }
+
+  &-content {
+    align-items: center;
+    display: flex;
+    margin: 0 24px;
+  }
+
+  &-disabled {
+    pointer-events: none;
+
+    #{$self}-arrow-circle {
+      background-color: $tertiary-color-dark;
+      border: 1px solid $secondary-color;
+    }
+  }
+}

@@ -1,0 +1,142 @@
+.text-input {
+  $self: &;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &:hover {
+    #{$self} {
+      &-input {
+        background: $tertiary-color-dark;
+        border: 2px solid $primary-color-dark;
+      }
+
+      &-label {
+        color: $white;
+      }
+
+      &-password {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+      }
+
+      &-info {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-title {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  &-input {
+    @extend %text-primary;
+    background: $tertiary-color;
+    border: 2px solid $primary-color;
+    border-radius: 6px;
+    color: $white;
+    padding: 16px 24px 8px;
+    transition: 0.25s all $cubic-bezier-smooth;
+  }
+
+  &-label {
+    @extend %text-primary;
+    color: $secondary-color;
+    pointer-events: none;
+    left: 26px;
+    position: absolute;
+    top: 14px;
+    transition: 0.25s all $cubic-bezier-smooth;
+  }
+
+  &-padding {
+    #{$self} {
+      &-input {
+        padding-right: 48px;
+      }
+    }
+  }
+
+  &-password {
+    &-icon {
+      cursor: pointer;
+      display: flex;
+      height: 24px;
+      position: absolute;
+      right: 12px;
+      top: 13px;
+      transition: 0.25s all $cubic-bezier-smooth;
+      width: 24px;
+
+      path {
+        fill: $secondary-color;
+      }
+    }
+  }
+
+  &-info {
+    align-items: center;
+    display: flex;
+    margin-top: 6px;
+
+    &-icon {
+      align-items: center;
+      display: flex;
+      height: 10px;
+      justify-content: center;
+      position: relative;
+      transition: 0.25s all $cubic-bezier-smooth;
+      width: 10px;
+
+      path {
+        fill: $secondary-color;
+      }
+    }
+
+    &-title {
+      @extend %text-info;
+      color: $secondary-color;
+      margin-left: 6px;
+      transition: 0.25s all $cubic-bezier-smooth;
+    }
+  }
+
+  &-filled {
+    #{$self} {
+      &-label {
+        @include font-size(10);
+        color: $white;
+        top: 2px;
+      }
+
+      &-password {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+      }
+
+      &-info {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-title {
+          color: $white;
+        }
+      }
+    }
+  }
+}

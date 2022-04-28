@@ -1,0 +1,51 @@
+%title-header {
+  @include font-size(20);
+  font-family: $secondary-font;
+  line-height: 24px;
+}
+
+%title-biggest {
+  @include font-size(64);
+  font-family: $primary-font-bold;
+  line-height: 72px;
+}
+
+%title-big {
+  @include font-size(48);
+  font-family: $primary-font-bold;
+  line-height: 52px;
+}
+
+%title-main {
+  @include font-size(32);
+  font-family: $primary-font-bold;
+  line-height: 36px;
+}
+
+%title-primary {
+  @include font-size(24);
+  font-family: $primary-font-bold;
+  line-height: 28px;
+}
+
+.title {
+  &-header {
+    @extend %title-header;
+  }
+
+  &-biggest {
+    @extend %title-biggest;
+  }
+
+  &-big {
+    @extend %title-big;
+  }
+
+  &-main {
+    @extend %title-main;
+  }
+
+  &-primary {
+    @extend %title-primary;
+  }
+}

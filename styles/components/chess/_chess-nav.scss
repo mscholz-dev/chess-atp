@@ -1,0 +1,76 @@
+.chess-nav {
+  $self: &;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  overflow: hidden;
+
+  &-item {
+    align-items: center;
+    background: $tertiary-color;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px;
+    transition: .25s all $cubic-bezier-smooth;
+    width: 100%;
+
+    &:hover {
+      background: $primary-color;
+
+      #{$self}-item {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-title {
+          color: $white;
+        }
+      }
+    }
+
+    &-icon {
+      display: flex;
+      height: 20px;
+      margin-bottom: 6px;
+      transition: .15s all $cubic-bezier-smooth;
+      width: 20px;
+
+      path {
+        fill: $secondary-color;
+      }
+    }
+
+    &-title {
+      @extend %text-info;
+      color: $secondary-color;
+      text-align: center;
+      text-transform: uppercase;
+      transition: .15s all $cubic-bezier-smooth;
+      white-space: nowrap;
+    }
+
+    &-current {
+      background: $primary-color-dark;
+
+      &:hover {
+        background: $primary-color-dark;
+      }
+
+      #{$self}-item {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-title {
+          color: $white;
+        }
+      }
+    }
+  }
+}

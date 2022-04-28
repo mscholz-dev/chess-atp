@@ -1,0 +1,56 @@
+%text-big {
+  @include font-size(20);
+  font-family: $primary-font-regular;
+  line-height: 26px;
+}
+
+%text-main {
+  @include font-size(18);
+  font-family: $primary-font-regular;
+  line-height: 24px;
+}
+
+%text-primary {
+  @include font-size(16);
+  font-family: $primary-font-regular;
+  line-height: 20px;
+}
+
+%text-secondary {
+  @include font-size(14);
+  font-family: $primary-font-regular;
+  line-height: 20px;
+}
+
+%text-info {
+  @include font-size(12);
+  font-family: $primary-font-regular;
+  line-height: 16px;
+}
+
+%text-tiny {
+  @include font-size(12);
+  font-family: $primary-font-bold;
+}
+
+.text {
+  &-main {
+    @extend %text-main;
+  }
+
+  &-primary {
+    @extend %text-primary;
+  }
+
+  &-secondary {
+    @extend %text-secondary;
+  }
+
+  &-info {
+    @extend %text-info;
+  }
+
+  &-tiny {
+    @extend %text-tiny;
+  }
+}

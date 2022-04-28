@@ -1,0 +1,11 @@
+{
+  "metaTitle": "Chess ATP - Dashboard statistiques",
+  "title": "Statistiques",
+  "chartAccountTitle": "Créations de comptes",
+  "chartAccountLabelTotal": "Total",
+  "chartAccountLabelClient": "Client",
+  "chartAccountLabelAdmin": "Admin",
+  "chartAccountLabelSuperAdmin": "Super Admin",
+  "chartPartyTitle": "Parties jouées",
+  "chartPartyLabel": "Total"
+}

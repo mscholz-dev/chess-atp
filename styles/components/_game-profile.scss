@@ -1,0 +1,110 @@
+.game-profile {
+  $self: &;
+  display: flex;
+  justify-content: space-between;
+
+  &-current {
+    #{$self} {
+      &-name {
+        color: $white;
+      }
+
+      &-time {
+        background: $primary-color;
+
+        &-text {
+          color: $white;
+        }
+
+        .stopwatch {
+          border: 2px solid $white;
+
+          &-needle {
+            background: $white;
+          }
+        }
+      }
+    }
+  }
+
+  &-info {
+    display: flex;
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &-avatar {
+    background: $white;
+    border-radius: 5px;
+    height: 42px;
+    margin-right: 12px;
+    object-fit: cover;
+    width: 42px;
+  }
+
+  &-name {
+    @extend %text-primary;
+    color: $secondary-color;
+    max-width: 150px;
+    transition: 0.15s all $cubic-bezier-smooth;
+  }
+
+  &-time {
+    align-items: center;
+    background: $tertiary-color;
+    border-radius: 6px;
+    display: flex;
+    padding: 3px 6px;
+    transition: 0.15s all $cubic-bezier-smooth;
+
+    .stopwatch {
+      margin-right: 12px;
+    }
+
+    &-text {
+      @extend %text-main;
+      color: $secondary-color;
+      transition: 0.15s all $cubic-bezier-smooth;
+    }
+  }
+
+  &-piece {
+    align-items: center;
+    display: flex;
+    height: 22px;
+
+    &-item {
+      display: flex;
+      margin-right: 6px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-icon {
+      display: flex;
+      height: 15px;
+      justify-content: center;
+      margin-left: -7px;
+      width: 15px;
+
+      path {
+        fill: $secondary-color;
+      }
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+
+    &-text {
+      @extend %text-info;
+      color: $secondary-color;
+      margin-left: 2px;
+    }
+  }
+}

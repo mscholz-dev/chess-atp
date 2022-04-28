@@ -1,0 +1,123 @@
+.section {
+  padding: 64px 0;
+
+  @include responsive(s-xl) {
+    padding: 92px 0;
+  }
+
+  @include responsive(t-xl) {
+    padding: 128px 0;
+  }
+
+  &-chess {
+    padding: 32px 0;
+
+    @include responsive(s-xl) {
+      padding: 48px 0;
+    }
+
+    @include responsive(t-xl) {
+      padding: 32px 0;
+    }
+  }
+
+  &-chess-main {
+    @include responsive(d-xs) {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &-title {
+    @extend %title-big;
+    color: $white;
+    margin-bottom: 48px;
+  }
+
+  &-subtitle {
+    @extend %title-main;
+    color: $white;
+    margin-bottom: 24px;
+  }
+
+  &-text {
+    @extend %text-main;
+    color: $white;
+    margin-bottom: 12px;
+  }
+
+  &-max {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 650px;
+  }
+
+  &-large {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+  }
+
+  &-tiny-padding {
+    padding: 72px 0;
+  }
+
+  &-profile {
+    &-stats {
+      margin: auto;
+      max-width: 650px;
+    }
+  }
+}
+
+.container {
+  padding: 0 24px;
+
+  @include responsive(s-xl) {
+    padding: 0 56px;
+  }
+
+  @include responsive(t-xl) {
+    padding: 0 60px;
+  }
+
+  &-chess {
+    padding: 0 12px;
+
+    @include responsive(s-xl) {
+      padding: 0 64px;
+    }
+
+    @include responsive(t-xs) {
+      padding: 0 92px;
+    }
+
+    @include responsive(t-xl) {
+      padding: 0 60px;
+    }
+
+    @include responsive(d-xs) {
+      padding: 0 24px;
+    }
+  }
+
+  &-stats {
+    padding: 0;
+
+    @include responsive(s) {
+      padding: 0 12px;
+    }
+
+    @include responsive(s-xl) {
+      padding: 0 24px;
+    }
+
+    @include responsive(t-xs) {
+      padding: 0 56px;
+    }
+
+    @include responsive(t-xl) {
+      padding: 0 60px;
+    }
+  }
+}

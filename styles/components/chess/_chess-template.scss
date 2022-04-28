@@ -1,0 +1,45 @@
+.chess-template {
+  background: $tertiary-color;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 600px;
+  max-height: 600px;
+  overflow: auto;
+  width: 100%;
+
+  @include responsive(t-xl) {
+    height: calc(100vh - 128px);
+    max-height: calc(100vh - 128px);
+  }
+
+  &-main {
+    margin: 0 auto;
+    max-width: 500px;
+
+    @include responsive(d-xs) {
+      width: 400px;
+    }
+  }
+
+  &-border {
+    border-top: 4px solid $primary-color-dark;
+  }
+
+  &-inner {
+    padding: 24px;
+
+    &-edito {
+      margin-top: 32px;
+    }
+
+    &-title {
+      @extend %text-main;
+      color: $white;
+      margin-bottom: 24px;
+    }
+
+    &-btn {
+      margin-bottom: 12px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.chart-legend {
+  $self: &;
+  align-items: center;
+  display: flex;
+  margin-right: 32px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  &-cartridge {
+    height: 3px;
+    margin-right: 6px;
+    min-width: 14px;
+    width: 14px;
+  }
+
+  &-text {
+    @extend %text-main;
+    color: $white;
+  }
+
+  &-bar {
+    #{$self}-cartridge {
+      height: 16px;
+      min-width: 12px;
+      width: 12px;
+    }
+  }
+}

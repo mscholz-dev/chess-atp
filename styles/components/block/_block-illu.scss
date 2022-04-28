@@ -1,0 +1,56 @@
+.block-illu {
+  $self: &;
+  width: 100%;
+
+  @include responsive(t-xl) {
+    display: flex;
+  }
+
+  &-content {
+    @include responsive(t-xl) {
+      margin: auto;
+      width: 50%;
+    }
+  }
+
+  &-img {
+    display: flex;
+    height: auto;
+    max-height: 360px;
+    position: relative;
+    width: 100%;
+
+    @include responsive(s-xl) {
+      max-height: 500px;
+    }
+
+    @include responsive(t-xl) {
+      max-height: 784px;
+      width: 50%;
+    }
+
+    &::after {
+      bottom: 0;
+      box-shadow: inset 0 0 100px $tertiary-color;
+      content: "";
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &-tag {
+      height: auto;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  &-full {
+    #{$self} {
+      &-img {
+        max-height: none;
+      }
+    }
+  }
+}

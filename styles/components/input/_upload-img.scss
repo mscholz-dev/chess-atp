@@ -1,0 +1,76 @@
+.upload-img {
+  $self: &;
+  max-width: 200px;
+
+  &-title {
+    @extend %text-main;
+    color: $secondary-color;
+    display: flex;
+    margin-bottom: 12px;
+    transition: all 0.25s $cubic-bezier-hover;
+  }
+
+  &-content {
+    align-items: center;
+    background: $tertiary-color;
+    border: 2px dashed $primary-color;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    height: 128px;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.25s $cubic-bezier-hover;
+    width: 100%;
+
+    &:hover {
+      background: $tertiary-color-dark;
+      #{$self} {
+        &-title {
+          color: $white;
+        }
+
+        &-content-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-legend {
+          color: $white;
+        }
+      }
+    }
+
+    &-icon {
+      display: flex;
+      height: 48px;
+      pointer-events: none;
+      width: 48px;
+
+      path {
+        fill: $secondary-color;
+        transition: all 0.25s $cubic-bezier-hover;
+      }
+    }
+
+    &-img {
+      display: flex;
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  &-input {
+    display: none;
+  }
+
+  &-legend {
+    @extend %text-info;
+    color: $secondary-color;
+    display: flex;
+    margin-top: 6px;
+    transition: all 0.25s $cubic-bezier-hover;
+  }
+}

@@ -1,0 +1,21 @@
+@mixin responsive($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(type-of($raw-query) == "string", unquote($raw-query), inspect($raw-query));
+
+    @media all and (min-width: #{$query}) {
+      @content;
+    }
+  } @else {
+    @error "This breakpoint: `#{$breakpoint}` doesn't exist in _variables.scss";
+  }
+}
+
+@mixin circle($radius: 32px) {
+  border-radius: $radius;
+  height: $radius;
+  line-height: $radius;
+  padding: 0;
+  width: $radius;
+}

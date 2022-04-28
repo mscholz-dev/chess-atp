@@ -1,0 +1,15 @@
+.main-wrapper {
+  background: $tertiary-color-dark;
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  overflow-x: hidden;
+
+  @include responsive(t-xl) {
+    margin: 0 0 0 250px;
+    min-height: 100vh;
+  }
+
+  @include responsive(d-xs) {
+    margin: 0 0 0 270px;
+  }
+}

@@ -1,0 +1,26 @@
+.chart-wrapper {
+  background: $tertiary-color-light;
+  border: 2px solid $tertiary-color-light;
+  border-radius: 5px;
+  margin-bottom: 64px;
+  padding: 6px;
+  transition: all 0.25s $cubic-bezier-hover;
+
+  @include responsive(s-xl) {
+    padding: 12px;
+  }
+
+  @include responsive(t-xs) {
+    padding: 24px;
+  }
+
+  &:hover {
+    border: 2px solid $white;
+  }
+
+  &-title {
+    @extend %title-primary;
+    color: $white;
+    margin-bottom: 24px;
+  }
+}

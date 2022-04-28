@@ -1,0 +1,64 @@
+.board-list {
+  &-item {
+    align-items: center;
+    background: $tertiary-color-light;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    overflow: hidden;
+    padding: 12px 24px;
+
+    &-data {
+      align-items: center;
+      display: flex;
+      width: 100%;
+    }
+
+    &-img {
+      border-radius: 5px;
+      display: flex;
+      height: 48px;
+      margin-right: 24px;
+      object-fit: cover;
+      width: 48px;
+    }
+
+    &-title {
+      @extend %text-big;
+      color: $white;
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    &-btn {
+      display: flex;
+
+      div {
+        margin: 0;
+
+        @include responsive(s-xl) {
+          margin-right: 12px;
+        }
+      }
+
+      .btn {
+        margin-right: 12px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &-title {
+        display: none;
+
+        @include responsive(s-xl) {
+          display: block;
+        }
+      }
+    }
+  }
+}

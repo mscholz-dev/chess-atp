@@ -1,0 +1,42 @@
+.nav-bar {
+  $self: &;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  &-item {
+    @extend %text-secondary;
+    align-items: center;
+    background: $primary-color-dark;
+    color: $secondary-color;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    transition: .25s all $cubic-bezier-smooth;
+    width: 100%;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+
+  &-current {
+    color: $white;
+
+    &:hover {
+      background: $primary-color-dark;
+    }
+  }
+
+  &-underline {
+    background: $white;
+    bottom: 0;
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    transition: .25s all $cubic-bezier-smooth;
+  }
+}

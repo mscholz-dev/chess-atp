@@ -1,0 +1,259 @@
+.header {
+  $self: &;
+  align-items: center;
+  background: $tertiary-color;
+  border-bottom: 2px solid $primary-color;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: fixed;
+  padding: 12px;
+  top: 0;
+  width: 100vw;
+  z-index: map-get($zindex, lvl2);
+
+  @include responsive(t-xl) {
+    justify-content: center;
+    padding: 16px 12px;
+    width: 250px;
+    z-index: map-get($zindex, lvl0-2);
+  }
+
+  @include responsive(d-xs) {
+    width: 270px;
+  }
+
+  &-left {
+    height: 44px;
+    width: 44px;
+
+    @include responsive(t-xl) {
+      display: none;
+    }
+  }
+
+  &-logo {
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+
+    &-icon {
+      border: 1px solid $primary-color;
+      border-radius: 50%;
+      display: flex;
+      height: 36px;
+      overflow: hidden;
+      width: 36px;
+    }
+
+    &-title {
+      @extend %title-header;
+      color: $white;
+      margin-left: 12px;
+    }
+  }
+
+  &-burger {
+    cursor: pointer;
+    height: 44px;
+    position: relative;
+    width: 44px;
+
+    @include responsive(t-xl) {
+      display: none;
+    }
+
+    &-one,
+    &-two,
+    &-three {
+      background: $white;
+      border-radius: 2px;
+      height: 2px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      transition: 0.25s all $cubic-bezier-smooth;
+    }
+
+    &-one {
+      left: calc(50% - 6px);
+      top: calc(50% - 6px);
+      width: 12px;
+    }
+
+    &-two {
+      left: 50%;
+      top: 50%;
+      width: 24px;
+    }
+
+    &-three {
+      left: calc(50% + 6px);
+      top: calc(50% + 6px);
+      width: 12px;
+    }
+  }
+
+  &-wrapper {
+    background: $tertiary-color;
+    height: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 70px;
+    transition: 0.5s all $cubic-bezier-smooth;
+    width: 100vw;
+
+    @include responsive(t-xl) {
+      height: calc(100vh - 70px);
+      width: 250px;
+    }
+
+    @include responsive(d-xs) {
+      width: 270px;
+    }
+
+    &-container {
+      margin-bottom: 48px;
+    }
+  }
+
+  &-item {
+    align-items: center;
+    background: $tertiary-color;
+    background: linear-gradient(90deg, $tertiary-color-dark 50%, $tertiary-color 50%);
+    background-position: right;
+    background-size: 200% 100%;
+    display: flex;
+    padding: 15px 30px;
+    text-decoration: none;
+    transition: 0.25s all $cubic-bezier-hover;
+
+    @include responsive(s-xs) {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    @include responsive(t-xl) {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    @include responsive(d-xs) {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    &:hover {
+      background-position: left;
+
+      #{$self}-item {
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+
+        &-title {
+          color: $white;
+        }
+      }
+    }
+
+    &-icon {
+      display: flex;
+      height: 24px;
+      transition: 0.25s all $cubic-bezier-hover;
+      width: 24px;
+
+      path {
+        fill: $secondary-color;
+      }
+    }
+
+    &-title {
+      @extend %text-main;
+      color: $secondary-color;
+      margin-left: 12px;
+      transition: 0.25s all $cubic-bezier-hover;
+    }
+  }
+
+  &-btn {
+    &-wrapper {
+      display: inline-flex;
+      flex-direction: column;
+      margin: 0 24px 48px;
+
+      @include responsive(s-xs) {
+        margin-left: 40px;
+        margin-right: 40px;
+      }
+
+      @include responsive(t-xl) {
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+
+      @include responsive(d-xs) {
+        margin-left: 24px;
+        margin-right: 24px;
+      }
+
+      .btn:first-child {
+        margin-bottom: 12px;
+      }
+    }
+
+    &-icon {
+      height: 24px;
+      margin-right: 12px;
+      width: 24px;
+    }
+  }
+
+  &-toggle {
+    margin-left: 24px;
+    margin-right: 24px;
+
+    @include responsive(s-xs) {
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+
+    @include responsive(t-xl) {
+      margin-left: 12px;
+      margin-right: 12px;
+    }
+
+    @include responsive(d-xs) {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+  }
+
+  &-open {
+    #{$self} {
+      &-burger {
+        &-one {
+          left: calc(50% - 4px);
+          top: calc(50% - 4px);
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &-two {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        &-three {
+          left: calc(50% + 4px);
+          top: calc(50% + 4px);
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+      }
+
+      &-wrapper {
+        height: calc(100vh - 70px);
+      }
+    }
+  }
+}

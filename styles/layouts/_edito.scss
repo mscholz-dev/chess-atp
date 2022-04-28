@@ -1,0 +1,63 @@
+.edito {
+  margin: 0 auto;
+  max-width: 432px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol {
+    color: $white;
+  }
+
+  h2 {
+    @extend %title-big;
+    margin-bottom: 64px;
+  }
+
+  h3 {
+    @extend %title-main;
+    margin-bottom: 24px;
+  }
+
+  h4 {
+    @extend %title-primary;
+  }
+
+  h5 {
+    @extend %text-main;
+  }
+
+  p {
+    @extend %text-primary;
+    margin-bottom: 12px;
+
+    + h3 {
+      margin-top: 48px;
+    }
+
+    &.toggle-input-text {
+      margin-bottom: 0;
+    }
+  }
+
+  .upload-img,
+  .text-input,
+  .toggle-input {
+    margin-bottom: 24px;
+  }
+
+  .upload-img {
+    .btn {
+      margin-top: 0;
+    }
+  }
+
+  .btn {
+    margin-top: 32px;
+  }
+}

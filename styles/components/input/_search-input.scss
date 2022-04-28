@@ -1,0 +1,66 @@
+.search-input {
+  $self: &;
+  align-items: center;
+  background: $tertiary-color;
+  border-bottom: 1px solid $secondary-color;
+  cursor: text;
+  display: flex;
+  padding: 8px 12px;
+  position: relative;
+  transition: .25s all $cubic-bezier-smooth;
+  width: 100%;
+
+  &:after {
+    background: $white;
+    bottom: -1px;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    transition: .25s all $cubic-bezier-smooth;
+    width: 0;
+  }
+
+  &:hover {
+    &:after {
+      width: 100%;
+    }
+    #{$self} {
+      &-cta,
+      &-delete {
+        path {
+          fill: $white;
+        }
+      }
+    }
+  }
+
+  &-cta,
+  &-delete {
+    cursor: pointer;
+    display: flex;
+    height: 20px;
+    width: 20px;
+
+    path {
+      fill: $secondary-color;
+      transition: .25s all $cubic-bezier-smooth;
+    }
+  }
+
+  &-cta {
+    margin-right: 12px;
+  }
+
+  &-field {
+    @extend %text-secondary;
+    background: transparent;
+    border: 0;
+    color: $white;
+    width: 100%;
+  }
+
+  &-delete {
+    margin-left: 12px;
+  }
+}

@@ -1,0 +1,62 @@
+.loader {
+  align-items: center;
+  background: $tertiary-color-light;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transition: all 0.5s $cubic-bezier-smooth;
+  width: 100%;
+  z-index: map-get($zindex, lvl0-1);
+
+  &-title {
+    @extend %title-big;
+    color: $white;
+  }
+
+  &-display {
+    opacity: 0.8;
+    pointer-events: auto;
+  }
+
+  &-anim {
+    animation: rotate 2.5s linear infinite;
+  }
+
+  &-wrapper {
+    align-items: center;
+    display: flex;
+    height: 125px;
+    justify-content: center;
+    position: relative;
+    width: 125px;
+  }
+
+  &-icon {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+
+    path {
+      fill: $white;
+    }
+  }
+
+  &-inverse {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

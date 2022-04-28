@@ -1,0 +1,111 @@
+.box {
+  align-items: center;
+  display: flex;
+  height: 12.5%;
+  justify-content: center;
+  position: relative;
+  width: 12.5%;
+
+  &-color {
+    &-one {
+      background: $white;
+    }
+
+    &-two {
+      background: $tertiary-color;
+    }
+  }
+
+  &-player {
+    height: 75%;
+    width: 75%;
+    z-index: map-get($zindex, lvl0-1);
+
+    &-one {
+      path {
+        fill: $primary-color;
+      }
+    }
+
+    &-two {
+      path {
+        fill: $tertiary-color-light;
+      }
+    }
+  }
+
+  &-pointer {
+    cursor: pointer;
+  }
+
+  &-focus {
+    background: $red;
+  }
+
+  &-choice {
+    background: $green;
+    border-radius: 50%;
+    height: 27.5%;
+    width: 27.5%;
+  }
+
+  &-circle {
+    height: 90%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: map-get($zindex, lvl0);
+  }
+
+  &-eat {
+    path {
+      fill: $green;
+    }
+  }
+
+  &-castling {
+    path {
+      fill: $yellow;
+    }
+  }
+
+  &-menace-one {
+    path {
+      fill: #8e44ad;
+    }
+  }
+
+  &-menace-two {
+    path {
+      fill: #6ab04c;
+    }
+  }
+
+  &-coordinate {
+    &-number,
+    &-string {
+      @extend %text-tiny;
+      position: absolute;
+    }
+
+    &-number {
+      left: 2px;
+      top: 2px;
+    }
+
+    &-string {
+      bottom: 2px;
+      right: 2px;
+    }
+
+    &-one {
+      color: $white;
+    }
+
+    &-two {
+      color: $tertiary-color;
+    }
+  }
+}

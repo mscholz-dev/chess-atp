@@ -1,0 +1,13 @@
+{
+  "metaTitle": "Chess ATP - Profil",
+  "searchLabel": "Rechercher un utilisateur",
+  "noData": "Aucune donnée",
+  "chartTitle": "Statistiques",
+  "chartLegendTotal": "Total",
+  "chartLegendWin": "Victoire",
+  "chartLegendEquality": "Egalité",
+  "chartLegendLoose": "Défaite",
+  "profileNavHistory": "Historique",
+  "profileSearchPlaceholder": "Nom d'utilisateur...",
+  "chartSubtitle": "Parties"
+}

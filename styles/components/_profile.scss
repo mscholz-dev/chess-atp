@@ -1,0 +1,133 @@
+.profile {
+  background: $tertiary-color-light;
+  border-radius: 5px;
+  margin: 0 auto 48px;
+  max-width: 650px;
+  padding: 12px;
+  position: relative;
+
+  @include responsive(s-xl) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @include responsive(t-xs) {
+    padding: 24px;
+  }
+
+  &-edit {
+    cursor: pointer;
+    height: 24px;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 24px;
+
+    path {
+      fill: $tertiary-color-dark;
+      transition: 0.25s fill $cubic-bezier-hover;
+    }
+
+    &:hover {
+      path {
+        fill: $white;
+      }
+    }
+  }
+
+  &-user {
+    display: flex;
+    margin-bottom: 24px;
+
+    &-img {
+      border-radius: 5px;
+      height: 64px;
+      margin-right: 12px;
+      min-width: 64px;
+      object-fit: cover;
+      width: 64px;
+    }
+
+    &-username {
+      @extend %title-primary;
+      color: $white;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc(100% - 112px);
+
+      @include responsive(s-xl) {
+        width: 100%;
+      }
+    }
+  }
+
+  &-item {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 24px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    @include responsive(s-xl) {
+      margin-bottom: 24px;
+      margin-right: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @include responsive(t-xs) {
+      margin-bottom: 0;
+      margin-right: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-wrapper {
+      align-items: center;
+      display: flex;
+      justify-content: space-around;
+
+      @include responsive(s-xl) {
+        display: flex;
+        flex-direction: column;
+        margin-right: 48px;
+      }
+
+      @include responsive(t-xs) {
+        flex-direction: row;
+      }
+    }
+
+    &-icon {
+      height: 24px;
+      margin-bottom: 4px;
+      width: 24px;
+
+      path {
+        fill: white;
+      }
+    }
+
+    &-text {
+      @extend %text-main;
+      color: $white;
+      text-align: center;
+    }
+  }
+
+  &-template {
+    max-width: 650px;
+
+    @include responsive(d-xs) {
+      width: 650px;
+    }
+  }
+}

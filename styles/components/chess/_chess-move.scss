@@ -1,0 +1,69 @@
+.chess-move {
+  $self: &;
+  align-items: center;
+  background: $tertiary-color;
+  border-bottom: 1px solid $secondary-color;
+  display: flex;
+  padding: 8px 12px;
+  transition: all 0.15s $cubic-bezier-hover;
+  width: 100%;
+
+  &:hover {
+    background: $tertiary-color-dark;
+    border-bottom: 1px solid $white;
+
+    #{$self} {
+      &-turn {
+        color: $white;
+      }
+
+      &-play {
+        color: $white;
+
+        &-icon {
+          path {
+            fill: $white;
+          }
+        }
+      }
+    }
+  }
+
+  &-turn {
+    @extend %text-primary;
+    color: $secondary-color;
+    margin-right: 32px;
+    transition: all 0.15s $cubic-bezier-hover;
+  }
+
+  &-play {
+    @extend %text-primary;
+    align-items: center;
+    color: $secondary-color;
+    display: flex;
+    justify-content: center;
+    margin-right: 32px;
+    transition: all 0.15s $cubic-bezier-hover;
+    width: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &-icon {
+      display: flex;
+      height: 14px;
+      margin-right: 4px;
+      width: 14px;
+
+      path {
+        fill: $secondary-color;
+        transition: all 0.15s $cubic-bezier-hover;
+      }
+
+      &-disabled {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@mixin font-size-px($size-value) {
+  font-size: $size-value * 1px;
+}
+
+@mixin font-size-rem($size-value) {
+  font-size: $size-value / 10 * 1rem;
+}
+
+@mixin font-size($size-value) {
+  @include font-size-px($size-value);
+  @include font-size-rem($size-value);
+}
