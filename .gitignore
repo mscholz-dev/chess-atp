@@ -2,4 +2,6 @@
 /.next/
 /out/
 /build
-.vercel
+/.vercel
+/.idea
+/package-lock.json
