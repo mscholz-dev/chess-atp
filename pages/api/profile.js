@@ -24,7 +24,6 @@ export default class ProfileApi {
           headers: {
             accept: "application/json",
           },
-          url: process.env.BASE_URL_API,
         }
       )
       .then((res) => res.data);
