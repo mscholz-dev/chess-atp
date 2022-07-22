@@ -1,7 +1,7 @@
 import api from "./index";
 
 export default class AuthApi {
-  static async index(cookie) {
+  static async index() {
     return await api
       .post(
         `/auth`,
@@ -9,7 +9,6 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )

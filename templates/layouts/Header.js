@@ -92,8 +92,8 @@ export default function Header({ auth, locale, language }) {
   }, [locale, language]);
 
   useEffect(async () => {
-    const res = await ProfileApi.username();
-    if (res.state) setUsername(res.username);
+    // const res = await ProfileApi.username();
+    // if (res.state) setUsername(res.username);
   }, []);
 
   return (

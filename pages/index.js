@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LinkItem from "../templates/components/LinkItem";
 import Page from "../templates/layouts/Page";
 import Section from "../templates/layouts/Section";
-import AuthApi from "./api/auth";
 import IconPlay from "../public/icons/play.svg";
 import IconUser from "../public/icons/user.svg";
-import ProfileApi from "./api/profile";
 import IconGear from "../public/icons/gear.svg";
 import IconEdit from "../public/icons/edit.svg";
 import IconUserAdd from "../public/icons/user-add.svg";
 import IconSignIn from "../public/icons/sign-in.svg";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Index({ auth, locale, language }) {
+export default function Index({ auth, locale, language, username }) {
   const { t } = useTranslation("index");
 
-  const [username, setUsername] = useState("");
-
-  useEffect(async () => {
-    if (!auth) return;
-    // get username
-    const res2 = await ProfileApi.username();
-    if (res2.state) setUsername(res2.username);
-  }, []);
+  console.log(auth, locale, language, username);
 
   return (
     <Page title={t("index:metaTitle")} auth={auth} locale={locale} language={language}>
@@ -44,37 +35,4 @@ export default function Index({ auth, locale, language }) {
       </Section>
     </Page>
   );
-}
-
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
 }
