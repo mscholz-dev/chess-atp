@@ -17,13 +17,12 @@ export default function MyApp({ Component, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = async (ctx) => {
-  // include dashboard
-  const appProps = await App.getInitialProps(ctx);
-  console.log(ctx);
-  // console.log(ctx);
-  // const test = await AuthApi.index();
-  // console.log(test);
+// MyApp.getInitialProps = async (ctx) => {
+//   // include dashboard
+//   const appProps = await App.getInitialProps(ctx);
+//   // console.log(ctx);
+//   const test = await AuthApi.index();
+//   // console.log(test);
 
-  return { ...appProps };
-};
+//   return { ...appProps };
+// };
