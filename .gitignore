@@ -5,3 +5,4 @@
 /.vercel
 /.idea
 /package-lock.json
+/.env
