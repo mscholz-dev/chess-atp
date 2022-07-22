@@ -75,27 +75,15 @@ export default function DashboardUsers({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.admin(cookie);
+export async function getServerSideProps({ locale }) {
+  const res = await AuthApi.admin();
 
   // if not an admin
   if (!res.state)
     return {
       props: {
         auth: false,
-        locale: context.locale,
+        locale,
         language: null,
       },
     };
@@ -103,7 +91,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       auth: res.role,
-      locale: context.locale,
+      locale,
       language: res.language,
     },
   };

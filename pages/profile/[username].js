@@ -169,9 +169,8 @@ export default function Profil({ data, auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const res = await ProfileApi.index(context.query.username);
-  const cookie = context.req.headers.cookie;
+export async function getServerSideProps({ locale, query }) {
+  const res = await ProfileApi.index(query.username);
 
   // user not exist
   if (!res.state)
@@ -185,19 +184,19 @@ export async function getServerSideProps(context) {
       props: {
         data: res ? res : null,
         auth: false,
-        locale: context.locale,
+        locale,
         language: null,
       },
     };
 
-  const res2 = await AuthApi.index(cookie);
+  const res2 = await AuthApi.index();
 
   if (!res2.state)
     return {
       props: {
         data: res ? res : null,
         auth: false,
-        locale: context.locale,
+        locale,
         language: null,
       },
     };
@@ -206,7 +205,7 @@ export async function getServerSideProps(context) {
     props: {
       data: res ? res : null,
       auth: res2.role,
-      locale: context.locale,
+      locale,
       language: res2.language,
     },
   };

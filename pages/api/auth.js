@@ -1,7 +1,7 @@
 import api from "./index";
 
 export default class AuthApi {
-  static async index(cookie) {
+  static async index() {
     return await api
       .post(
         `/auth`,
@@ -9,14 +9,13 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )
       .then((res) => res.data);
   }
 
-  static async admin(cookie) {
+  static async admin() {
     return await api
       .post(
         `/auth/admin`,
@@ -24,14 +23,13 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )
       .then((res) => res.data);
   }
 
-  static async superAdmin(cookie) {
+  static async superAdmin() {
     return await api
       .post(
         `/auth/superadmin`,
@@ -39,7 +37,6 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )

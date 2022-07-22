@@ -8,7 +8,7 @@ import IconSignIn from "../../public/icons/sign-in.svg";
 import ToggleInput from "../components/input/ToggleInput.js";
 import IconGear from "../../public/icons/gear.svg";
 import IconUser from "../../public/icons/user.svg";
-import ProfileApi from "../../pages/api/profile";
+// import ProfileApi from "../../pages/api/profile";
 import IconChartLine from "../../public/icons/chart-line.svg";
 import IconScaleBalance from "../../public/icons/scale-balance.svg";
 import useTranslation from "next-translate/useTranslation";
@@ -92,8 +92,8 @@ export default function Header({ auth, locale, language }) {
   }, [locale, language]);
 
   useEffect(async () => {
-    const res = await ProfileApi.username();
-    if (res.state) setUsername(res.username);
+    // const res = await ProfileApi.username();
+    // if (res.state) setUsername(res.username);
   }, []);
 
   return (

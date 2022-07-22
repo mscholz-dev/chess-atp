@@ -157,37 +157,24 @@ export default function ProfileEdit({ data, auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        data: context.query.username,
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
+export async function getServerSideProps({ locale, query }) {
+  const res = await AuthApi.index();
 
   if (!res.state)
     return {
       props: {
         auth: false,
         data: "",
-        locale: context.locale,
+        locale,
         language: null,
       },
     };
 
   return {
     props: {
-      data: context.query.username,
+      data: query.username,
       auth: res.role,
-      locale: context.locale,
+      locale,
       language: res.language,
     },
   };

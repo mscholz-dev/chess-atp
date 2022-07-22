@@ -163,26 +163,14 @@ export default function Register({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
+export async function getServerSideProps({ locale }) {
+  const res = await AuthApi.index();
 
   if (!res.state)
     return {
       props: {
         auth: false,
-        locale: context.locale,
+        locale,
         language: null,
       },
     };
@@ -190,7 +178,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       auth: res.role,
-      locale: context.locale,
+      locale,
       language: res.language,
     },
   };
