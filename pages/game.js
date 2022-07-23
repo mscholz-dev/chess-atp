@@ -171,7 +171,6 @@ export default function Game({ locale }) {
 
   // send equality request to other player
   const handleEqualityClick = () => {
-    console.log(equalityTimeout);
     if (!socket || !turn || waitingTime || equalityTimeout) return;
 
     socket.emit("game:requestEquality");
