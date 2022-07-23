@@ -13,10 +13,13 @@ import useTranslation from "next-translate/useTranslation";
 import ToggleInput from "../../../templates/components/input/ToggleInput.js";
 import setLanguage from "next-translate/setLanguage";
 
-export default function ProfileEdit({ data, auth, locale, language }) {
+export default function ProfileEdit({ data, locale }) {
   const { t } = useTranslation(["profileEdit", "common"]);
 
   const router = useRouter();
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [toast, setToast] = useState({
     display: false,
@@ -136,8 +139,17 @@ export default function ProfileEdit({ data, auth, locale, language }) {
     }
   }, [locale]);
 
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLang(res.lang);
+  }, []);
+
   return (
-    <Page title={t("profileEdit:metaTitle")} auth={auth} toast={toast} handleToastClick={handleToastClick} locale={locale} language={language}>
+    <Page title={t("profileEdit:metaTitle")} auth={auth} toast={toast} handleToastClick={handleToastClick} locale={locale} language={lang}>
       <BlockIllu imgSrc="/img/chess-light.jpg" imgAlt={t("profileEdit:altIllu")} full>
         <Form onSubmit={handleSubmit}>
           <h2>{t("profileEdit:title")}</h2>
@@ -157,38 +169,11 @@ export default function ProfileEdit({ data, auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        data: context.query.username,
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        data: "",
-        locale: context.locale,
-        language: null,
-      },
-    };
-
+export async function getServerSideProps({ query, locale }) {
   return {
     props: {
-      data: context.query.username,
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
+      data: query.username,
+      locale: locale,
     },
   };
 }

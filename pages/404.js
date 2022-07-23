@@ -8,20 +8,19 @@ export default function NotFound() {
   const { t } = useTranslation("404");
 
   const [auth, setAuth] = useState(false);
-  const [language, setLanguage] = useState(null);
+  const [lang, setLang] = useState(null);
 
-  // is auth
   useEffect(async () => {
+    // get auth
     const res = await AuthApi.index();
-    // no connected
     if (!res.state) return;
 
     setAuth(res.role);
-    setLanguage(res.language);
+    setLang(res.lang);
   }, []);
 
   return (
-    <Page title={t("404:metaTitle")} auth={auth} language={language}>
+    <Page title={t("404:metaTitle")} auth={auth} language={lang}>
       <section className="not-found">
         <div>
           <h1 className="not-found-title">{t("404:title")}</h1>

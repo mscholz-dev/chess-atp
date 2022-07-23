@@ -12,12 +12,15 @@ import ChartLegend from "../../templates/components/chart/ChartLegend";
 import { color } from "../../utils/color";
 import useTranslation from "next-translate/useTranslation";
 
-export default function DashboardStatictics({ auth, locale, language }) {
+export default function DashboardStatictics({ locale }) {
   const { t } = useTranslation("dashboardStatistics");
 
   const router = useRouter();
 
   const monthLabel = returnSixLastMonth(false, locale);
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [usersData, setUsersData] = useState(null);
   const [gamesData, setGamesData] = useState(null);
@@ -71,8 +74,13 @@ export default function DashboardStatictics({ auth, locale, language }) {
     },
   };
 
-  useEffect(() => {
-    if (!auth) router.push("/");
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.superAdmin();
+    if (!res.state) return router.push("/");
+
+    setAuth(res.role);
+    setLang(res.lang);
   }, []);
 
   useEffect(async () => {
@@ -183,7 +191,7 @@ export default function DashboardStatictics({ auth, locale, language }) {
   }, []);
 
   return (
-    <Page title={t("dashboardStatistics:metaTitle")} auth={auth} locale={locale} language={language}>
+    <Page title={t("dashboardStatistics:metaTitle")} auth={auth} locale={locale} language={lang}>
       <Section large stats>
         <h2 className="section-title">{t("dashboardStatistics:title")}</h2>
         <ChartWrapper title={t("dashboardStatistics:chartAccountTitle")}>
@@ -207,36 +215,6 @@ export default function DashboardStatictics({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.superAdmin(cookie);
-
-  // if not a super admin
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

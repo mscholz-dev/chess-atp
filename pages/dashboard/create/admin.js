@@ -13,10 +13,13 @@ import useTranslation from "next-translate/useTranslation";
 import ToggleInput from "../../../templates/components/input/ToggleInput";
 import setLanguage from "next-translate/setLanguage";
 
-export default function DashboardCreateAdmin({ auth, locale, language }) {
+export default function DashboardCreateAdmin({ locale }) {
   const { t } = useTranslation(["dashboardAdminCreate", "common"]);
 
   const router = useRouter();
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
@@ -36,8 +39,13 @@ export default function DashboardCreateAdmin({ auth, locale, language }) {
 
   const handleToastClick = () => setToast({ ...toast, display: !toast.display });
 
-  useEffect(() => {
-    if (!auth) router.push("/");
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.superAdmin();
+    if (!res.state) return router.push("/");
+
+    setAuth(res.role);
+    setLang(res.lang);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -146,7 +154,7 @@ export default function DashboardCreateAdmin({ auth, locale, language }) {
   }, [locale]);
 
   return (
-    <Page title={t("dashboardAdminCreate:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={language}>
+    <Page title={t("dashboardAdminCreate:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={lang}>
       <BlockIllu imgSrc="/img/chess-knight.jpg" imgAlt={t("dashboardAdminCreate:altIllu")} full tinyPadding>
         <Form onSubmit={handleSubmit}>
           <h2>{t("dashboardAdminCreate:title")}</h2>
@@ -167,36 +175,6 @@ export default function DashboardCreateAdmin({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.superAdmin(cookie);
-
-  // if not a super admin
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

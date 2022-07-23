@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Page from "../templates/layouts/Page";
 import AuthApi from "./api/auth";
 import Section from "../templates/layouts/Section";
@@ -9,17 +9,25 @@ import IconChartLine from "../public/icons/chart-line.svg";
 import IconUserAdd from "../public/icons/user-add.svg";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Dashboard({ auth, locale, language }) {
+export default function Dashboard({ locale }) {
   const { t } = useTranslation("dashboard");
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!auth) router.push("/");
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
+
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.admin();
+    if (!res.state) return router.push("/");
+
+    setAuth(res.role);
+    setLang(res.lang);
   }, []);
 
   return (
-    <Page title={t("dashboard:metaTitle")} auth={auth} locale={locale} language={language}>
+    <Page title={t("dashboard:metaTitle")} auth={auth} locale={locale} language={lang}>
       <Section max>
         <h2 className="section-title">{t("dashboard:title")}</h2>
         <LinkItem href="/dashboard/users" icon={<IconUser />} title={t("dashboard:usersManagement")} />
@@ -35,36 +43,6 @@ export default function Dashboard({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.admin(cookie);
-
-  // if not an admin
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

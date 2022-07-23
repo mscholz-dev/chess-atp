@@ -12,20 +12,30 @@ import IconUserAdd from "../public/icons/user-add.svg";
 import IconSignIn from "../public/icons/sign-in.svg";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Index({ auth, locale, language }) {
+export default function Index({ locale }) {
   const { t } = useTranslation("index");
 
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
   const [username, setUsername] = useState("");
 
   useEffect(async () => {
-    if (!auth) return;
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLang(res.lang);
+
     // get username
     const res2 = await ProfileApi.username();
-    if (res2.state) setUsername(res2.username);
+    if (!res2.state) return;
+
+    setUsername(res2.username);
   }, []);
 
   return (
-    <Page title={t("index:metaTitle")} auth={auth} locale={locale} language={language}>
+    <Page title={t("index:metaTitle")} auth={auth} locale={locale} language={lang}>
       <Section max>
         <h2 className="section-title">{t("index:title")}</h2>
         {auth ? (
@@ -46,35 +56,6 @@ export default function Index({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

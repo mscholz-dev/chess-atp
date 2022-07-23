@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import Page from "../templates/layouts/Page";
 import BlockIllu from "../templates/components/block/BlockIllu.js";
@@ -10,13 +10,16 @@ import LoginApi from "./api/login";
 import AuthApi from "./api/auth";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Login({ auth, locale, language }) {
+export default function Login({ locale }) {
   const { t } = useTranslation(["login", "common"]);
 
   const router = useRouter();
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [toast, setToast] = useState({
     display: false,
@@ -75,8 +78,17 @@ export default function Login({ auth, locale, language }) {
     }
   };
 
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLang(res.lang);
+  }, []);
+
   return (
-    <Page title={t("login:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={language}>
+    <Page title={t("login:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={lang}>
       <BlockIllu imgSrc="/img/chess-break.jpg" imgAlt={t("login:illuAlt")} full>
         <Form onSubmit={handleSubmit}>
           <h2>{t("login:title")}</h2>
@@ -94,35 +106,6 @@ export default function Login({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

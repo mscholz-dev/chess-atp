@@ -16,7 +16,7 @@ import WebcamClient from "../templates/components/WebcamClient.js";
 import AuthApi from "./api/auth.js";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Game({ auth, locale, language }) {
+export default function Game({ locale }) {
   const { t } = useTranslation(["game", "common"]);
 
   const [toast, setToast] = useState({
@@ -30,6 +30,9 @@ export default function Game({ auth, locale, language }) {
     avatar: "",
     username: "",
   };
+
+  const [auth, setAuth] = useState(false);
+  const [language, setLanguage] = useState(null);
 
   const [playerOneData, setPlayerOneData] = useState(playerDataEmpty);
   const [playerTwoData, setPlayerTwoData] = useState(playerDataEmpty);
@@ -352,6 +355,15 @@ export default function Game({ auth, locale, language }) {
     }
   }, [socket]);
 
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLanguage(res.language);
+  }, []);
+
   return (
     <Page title={t("game:metaTitle")} auth={auth} toast={toast} handleToastClick={handleToastClick} locale={locale} language={language}>
       {/*TODO: webcam not done*/}
@@ -371,35 +383,6 @@ export default function Game({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

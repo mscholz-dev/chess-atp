@@ -14,10 +14,13 @@ import { Line } from "react-chartjs-2";
 import { color } from "../../utils/color";
 import useTranslation from "next-translate/useTranslation";
 
-export default function Profil({ data, auth, locale, language }) {
+export default function Profil({ data, locale }) {
   const { t } = useTranslation("profile");
 
   const dayLabel = returnSevenLastDay(false, locale);
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [currentNav, setCurrentNav] = useState(0);
 
@@ -146,8 +149,17 @@ export default function Profil({ data, auth, locale, language }) {
     }
   }, [data.username]);
 
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLang(res.lang);
+  }, []);
+
   return (
-    <Page title={t("profile:metaTitle")} auth={auth} locale={locale} language={language}>
+    <Page title={t("profile:metaTitle")} auth={auth} locale={locale} language={lang}>
       <Section>
         <SearchHeader max label={t("profile:searchLabel")} search={searchHeader} setSearch={setSearchHeader} handleSearch={handleSearchHeader} placeholder="" data={searchHeaderData} />
         <Profile imgSrc={data?.imgSrc ? data.imgSrc : `default.png`} username={data?.username ? data.username : t("profile:noData")} lastConnection={data?.lastConnection ? convertDatetimeInTimeSpent(data.lastConnection, locale) : t("profile:noData")} createdDate={data?.createDate ? convertDatetimeInDate(data.createDate, locale) : t("profile:noData")} />
@@ -169,9 +181,8 @@ export default function Profil({ data, auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const res = await ProfileApi.index(context.query.username);
-  const cookie = context.req.headers.cookie;
+export async function getServerSideProps({ query, locale }) {
+  const res = await ProfileApi.index(query.username);
 
   // user not exist
   if (!res.state)
@@ -179,35 +190,10 @@ export async function getServerSideProps(context) {
       notFound: true,
     };
 
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        data: res ? res : null,
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res2 = await AuthApi.index(cookie);
-
-  if (!res2.state)
-    return {
-      props: {
-        data: res ? res : null,
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
   return {
     props: {
-      data: res ? res : null,
-      auth: res2.role,
-      locale: context.locale,
-      language: res2.language,
+      data: res,
+      locale,
     },
   };
 }

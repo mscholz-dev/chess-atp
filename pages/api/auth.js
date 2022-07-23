@@ -15,7 +15,7 @@ export default class AuthApi {
       .then((res) => res.data);
   }
 
-  static async admin(cookie) {
+  static async admin() {
     return await api
       .post(
         `/auth/admin`,
@@ -23,14 +23,13 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )
       .then((res) => res.data);
   }
 
-  static async superAdmin(cookie) {
+  static async superAdmin() {
     return await api
       .post(
         `/auth/superadmin`,
@@ -38,7 +37,6 @@ export default class AuthApi {
         {
           headers: {
             accept: "application/json",
-            Cookie: cookie,
           },
         }
       )

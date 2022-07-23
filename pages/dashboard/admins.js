@@ -9,10 +9,13 @@ import SuperAdminApi from "../api/superadmin";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 
-export default function DashboardAdmins({ auth, locale, language }) {
+export default function DashboardAdmins({ locale }) {
   const { t } = useTranslation(["dashboardAdmins", "common"]);
 
   const router = useRouter();
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [items, setItems] = useState([]);
 
@@ -46,8 +49,13 @@ export default function DashboardAdmins({ auth, locale, language }) {
     }
   };
 
-  useEffect(() => {
-    if (!auth) router.push("/");
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.superAdmin();
+    if (!res.state) return router.push("/");
+
+    setAuth(res.role);
+    setLang(res.lang);
   }, []);
 
   useEffect(async () => {
@@ -60,7 +68,7 @@ export default function DashboardAdmins({ auth, locale, language }) {
   }, [currentPage]);
 
   return (
-    <Page title={t("dashboardAdmins:metaTitle")} auth={auth} locale={locale} language={language}>
+    <Page title={t("dashboardAdmins:metaTitle")} auth={auth} locale={locale} language={lang}>
       <Section max>
         <h2 className="section-title">{t("dashboardAdmins:title")}</h2>
         <SearchHeader label={t("dashboardAdmins:searchLabel")} search={searchHeader} setSearch={setSearchHeader} handleSearch={handleSearchHeader} placeholder="" data={[]} />
@@ -75,36 +83,6 @@ export default function DashboardAdmins({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.superAdmin(cookie);
-
-  // if not a super admin
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }

@@ -13,7 +13,7 @@ import useTranslation from "next-translate/useTranslation";
 import ToggleInput from "../templates/components/input/ToggleInput.js";
 import setLanguage from "next-translate/setLanguage";
 
-export default function Register({ auth, locale, language }) {
+export default function Register({ locale }) {
   const { t } = useTranslation(["register", "common"]);
 
   const router = useRouter();
@@ -21,6 +21,9 @@ export default function Register({ auth, locale, language }) {
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const [auth, setAuth] = useState(false);
+  const [lang, setLang] = useState(null);
 
   const [toast, setToast] = useState({
     display: false,
@@ -128,6 +131,15 @@ export default function Register({ auth, locale, language }) {
     }
   };
 
+  useEffect(async () => {
+    // get auth
+    const res = await AuthApi.index();
+    if (!res.state) return;
+
+    setAuth(res.role);
+    setLang(res.lang);
+  }, []);
+
   useEffect(() => {
     switch (locale) {
       case "fr":
@@ -142,7 +154,7 @@ export default function Register({ auth, locale, language }) {
   }, [locale]);
 
   return (
-    <Page title={t("register:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={language}>
+    <Page title={t("register:metaTitle")} toast={toast} handleToastClick={handleToastClick} auth={auth} locale={locale} language={lang}>
       <BlockIllu imgSrc="/img/chess-take.jpg" imgAlt={t("register:altIllu")} full tinyPadding>
         <Form onSubmit={handleSubmit}>
           <h2>{t("register:title")}</h2>
@@ -163,35 +175,6 @@ export default function Register({ auth, locale, language }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-
-  // no cookie
-  if (!cookie)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  const res = await AuthApi.index(cookie);
-
-  if (!res.state)
-    return {
-      props: {
-        auth: false,
-        locale: context.locale,
-        language: null,
-      },
-    };
-
-  return {
-    props: {
-      auth: res.role,
-      locale: context.locale,
-      language: res.language,
-    },
-  };
+export async function getServerSideProps({ locale }) {
+  return { props: { locale } };
 }
