@@ -22,7 +22,7 @@ export default function Index({ locale }) {
   useEffect(async () => {
     // get auth
     const res = await AuthApi.index();
-    alert(res);
+    alert(res.state, res.role, res.language);
     if (!res.state) return;
 
     setAuth(res.role);
