@@ -3,7 +3,7 @@ import api from "./index";
 export default class AuthApi {
   static async index() {
     return await api
-      .post(
+      .get(
         `/auth`,
         {},
         {
@@ -33,6 +33,20 @@ export default class AuthApi {
     return await api
       .post(
         `/auth/superadmin`,
+        {},
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      )
+      .then((res) => res.data);
+  }
+
+  static async deco() {
+    return await api
+      .post(
+        `/auth/deco`,
         {},
         {
           headers: {
