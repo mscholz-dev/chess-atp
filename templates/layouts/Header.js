@@ -102,7 +102,7 @@ export default function Header({ auth, locale, language }) {
 
   const handleDeco = async () => {
     const res = await AuthApi.deco();
-    if (res.state) return router.reload("/");
+    if (res.state) return router.push("/");
   };
 
   return (
@@ -186,14 +186,14 @@ export default function Header({ auth, locale, language }) {
             </a>
           </Link>
 
-          {auth && (
-            <a className="header-item" onClick={handleDeco}>
-              <div className="header-item-icon">
-                <IconSignIn />
-              </div>
-              <span className="header-item-title">{t("headerDeco")}</span>
-            </a>
-          )}
+          {/* {auth && ( */}
+          <a className="header-item" onClick={handleDeco}>
+            <div className="header-item-icon">
+              <IconSignIn />
+            </div>
+            <span className="header-item-title">{t("headerDeco")}</span>
+          </a>
+          {/* )} */}
         </div>
 
         {!auth && (
