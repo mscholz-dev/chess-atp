@@ -7,6 +7,7 @@
   "headerLegalNotice": "Mentions légales",
   "headerRegister": "Inscription",
   "headerLogin": "Connexion",
+  "headerDeco": "Déconnexion",
   "emailLabel": "Email",
   "emailCondition": "Champ non vide",
   "passwordLabel": "Mot de passe",

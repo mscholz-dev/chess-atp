@@ -7,6 +7,7 @@
   "headerLegalNotice": "Legal notice",
   "headerRegister": "Registration",
   "headerLogin": "Connection",
+  "headerDeco": "Deconnection",
   "emailLabel": "Email",
   "emailCondition": "Field not blank",
   "passwordLabel": "Password",

@@ -14,9 +14,13 @@ import IconScaleBalance from "../../public/icons/scale-balance.svg";
 import useTranslation from "next-translate/useTranslation";
 import setLanguage from "next-translate/setLanguage";
 import Link from "next/link";
+import AuthApi from "../../pages/api/auth";
+import { useRouter } from "next/router";
 
 export default function Header({ auth, locale, language }) {
   const { t } = useTranslation("common");
+
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
@@ -95,6 +99,11 @@ export default function Header({ auth, locale, language }) {
     const res = await ProfileApi.username();
     if (res.state) setUsername(res.username);
   }, []);
+
+  const handleDeco = async () => {
+    const res = await AuthApi.deco();
+    if (res.state) return router.reload("/");
+  };
 
   return (
     <header className={`header${open ? " header-open" : ""}`}>
@@ -176,6 +185,15 @@ export default function Header({ auth, locale, language }) {
               <span className="header-item-title">{t("headerLegalNotice")}</span>
             </a>
           </Link>
+
+          {auth && (
+            <a className="header-item" onClick={handleDeco}>
+              <div className="header-item-icon">
+                <IconSignIn />
+              </div>
+              <span className="header-item-title">{t("headerDeco")}</span>
+            </a>
+          )}
         </div>
 
         {!auth && (
