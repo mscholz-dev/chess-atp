@@ -116,7 +116,12 @@ export default function Header({ auth, locale, language }) {
           <span className="header-logo-title link-hidden">Chess ATP</span>
         </a>
       </Link>
-      <div className="header-burger" onClick={handleClickOpen} onKeyDown={handleKeyOpen} tabIndex={0}>
+      <div
+        className="header-burger"
+        onClick={handleClickOpen}
+        onKeyDown={handleKeyOpen}
+        tabIndex={0}
+      >
         <span className="header-burger-one" />
         <span className="header-burger-two" />
         <span className="header-burger-three" />
@@ -147,7 +152,9 @@ export default function Header({ auth, locale, language }) {
                   <div className="header-item-icon">
                     <IconUser />
                   </div>
-                  <span className="header-item-title">{t("headerProfile")}</span>
+                  <span className="header-item-title">
+                    {t("headerProfile")}
+                  </span>
                 </a>
               </Link>
 
@@ -158,7 +165,9 @@ export default function Header({ auth, locale, language }) {
                       <div className="header-item-icon">
                         <IconGear />
                       </div>
-                      <span className="header-item-title">{t("headerDashboard")}</span>
+                      <span className="header-item-title">
+                        {t("headerDashboard")}
+                      </span>
                     </a>
                   </Link>
 
@@ -168,7 +177,9 @@ export default function Header({ auth, locale, language }) {
                         <div className="header-item-icon">
                           <IconChartLine />
                         </div>
-                        <span className="header-item-title">{t("headerStatistics")}</span>
+                        <span className="header-item-title">
+                          {t("headerStatistics")}
+                        </span>
                       </a>
                     </Link>
                   )}
@@ -182,18 +193,20 @@ export default function Header({ auth, locale, language }) {
               <div className="header-item-icon">
                 <IconScaleBalance />
               </div>
-              <span className="header-item-title">{t("headerLegalNotice")}</span>
+              <span className="header-item-title">
+                {t("headerLegalNotice")}
+              </span>
             </a>
           </Link>
 
-          {/* {auth && ( */}
-          <a className="header-item" onClick={handleDeco}>
-            <div className="header-item-icon">
-              <IconSignIn />
-            </div>
-            <span className="header-item-title">{t("headerDeco")}</span>
-          </a>
-          {/* )} */}
+          {auth && (
+            <a className="header-item" onClick={handleDeco}>
+              <div className="header-item-icon">
+                <IconSignIn />
+              </div>
+              <span className="header-item-title">{t("headerDeco")}</span>
+            </a>
+          )}
         </div>
 
         {!auth && (
@@ -218,7 +231,12 @@ export default function Header({ auth, locale, language }) {
         )}
 
         <div className="header-toggle">
-          <ToggleInput text={t("common:toggleLangNotCheck")} textChecked={t("common:toggleLangCheck")} checked={toogleChecked} handleChange={handleToggleChange} />
+          <ToggleInput
+            text={t("common:toggleLangNotCheck")}
+            textChecked={t("common:toggleLangCheck")}
+            checked={toogleChecked}
+            handleChange={handleToggleChange}
+          />
         </div>
       </div>
     </header>

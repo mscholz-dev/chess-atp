@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Page from "../templates/layouts/Page.js";
 import Grid from "../templates/components/Grid.js";
 import { io } from "socket.io-client";
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import { speechCondition } from "../utils/speech";
 import GameProfile from "../templates/components/GameProfile";
 import Section from "../templates/layouts/Section.js";
@@ -11,8 +13,8 @@ import GameApi from "./api/game";
 import { restoreBoard, startGrid } from "../utils/grid.js";
 import { resultWinner, resultLooser, resultEquality } from "../utils/result";
 import { parseGameMoves } from "../utils/parsing.js";
-import BtnSpeech from "../templates/components/BtnSpeech.js";
-import WebcamClient from "../templates/components/WebcamClient.js";
+// import BtnSpeech from "../templates/components/BtnSpeech.js";
+// import WebcamClient from "../templates/components/WebcamClient.js";
 import AuthApi from "./api/auth.js";
 import useTranslation from "next-translate/useTranslation";
 
@@ -74,7 +76,8 @@ export default function Game({ locale }) {
   const [booleanModal, setBooleanModal] = useState(false);
   const [equalityTimeout, setEqualityTimeout] = useState(false);
 
-  const handleToastClick = () => setToast({ ...toast, display: !toast.display });
+  const handleToastClick = () =>
+    setToast({ ...toast, display: !toast.display });
 
   // init speech recognition
   const { transcript, listening } = useSpeechRecognition();
@@ -167,7 +170,8 @@ export default function Game({ locale }) {
   };
 
   // cancel searching event
-  const handleCancelGameClick = () => waitingTime && socket.emit("game:cancelSearching");
+  const handleCancelGameClick = () =>
+    waitingTime && socket.emit("game:cancelSearching");
 
   // send equality request to other player
   const handleEqualityClick = () => {
@@ -192,7 +196,10 @@ export default function Game({ locale }) {
   const handleSurrenderClick = () => {
     if (!socket || !turn || waitingTime) return;
 
-    let data = playerNumber === 1 ? { looser: true, timerOne, timerTwo, surrender: true } : { winner: true, timerOne, timerTwo, surrender: true };
+    let data =
+      playerNumber === 1
+        ? { looser: true, timerOne, timerTwo, surrender: true }
+        : { winner: true, timerOne, timerTwo, surrender: true };
     socket.emit("game:finishing", data);
 
     setResult(resultLooser(t));
@@ -203,13 +210,24 @@ export default function Game({ locale }) {
 
   // for restart game timers after enemy deconnection
   useEffect(() => {
-    if (prevTurn && turn === 1) setTimeout(() => setTimerOne(timerOne - 1), 2000);
-    if (prevTurn && turn === 2) setTimeout(() => setTimerTwo(timerTwo - 1), 2000);
+    if (prevTurn && turn === 1)
+      setTimeout(() => setTimerOne(timerOne - 1), 2000);
+    if (prevTurn && turn === 2)
+      setTimeout(() => setTimerTwo(timerTwo - 1), 2000);
     setPrevTurn(false);
   }, [prevTurn, turn, timerOne, timerTwo]);
 
   useEffect(() => {
-    if (displayLoader && !waitingTime && playerOneData.avatar && playerOneData.username && playerTwoData.avatar && playerTwoData.username && timerOne && timerTwo) {
+    if (
+      displayLoader &&
+      !waitingTime &&
+      playerOneData.avatar &&
+      playerOneData.username &&
+      playerTwoData.avatar &&
+      playerTwoData.username &&
+      timerOne &&
+      timerTwo
+    ) {
       socket.emit("game:update", { timerOne, timerTwo });
     }
   }, [waitingTime, displayLoader]);
@@ -221,8 +239,17 @@ export default function Game({ locale }) {
     setTimeout(() => setWaitingTime(waitingTime + 1), 1000);
 
     // if waiting time is finished
-    if (waitingTime === 30 && playerOneData.avatar && playerOneData.username && playerTwoData.avatar && playerTwoData.username) {
-      let data = playerNumber === 1 ? { winner: true, timerOne, timerTwo } : { looser: true, timerOne, timerTwo };
+    if (
+      waitingTime === 30 &&
+      playerOneData.avatar &&
+      playerOneData.username &&
+      playerTwoData.avatar &&
+      playerTwoData.username
+    ) {
+      let data =
+        playerNumber === 1
+          ? { winner: true, timerOne, timerTwo }
+          : { looser: true, timerOne, timerTwo };
       socket.emit("game:finishing", data);
       setDisplayLoader(false);
       setTurn(null);
@@ -305,33 +332,36 @@ export default function Game({ locale }) {
       });
 
       // socket in reconnection
-      socket.on("game:reconnect", ({ number, enemy, moves, turn, timerPlayerOne, timerPlayerTwo }) => {
-        setDisplayLoader(false);
+      socket.on(
+        "game:reconnect",
+        ({ number, enemy, moves, turn, timerPlayerOne, timerPlayerTwo }) => {
+          setDisplayLoader(false);
 
-        setPlayerNumber(number);
+          setPlayerNumber(number);
 
-        const { newBox, pieceEatOne, pieceEatTwo } = restoreBoard(box, moves);
+          const { newBox, pieceEatOne, pieceEatTwo } = restoreBoard(box, moves);
 
-        setBox(newBox);
-        setPlayerOnePiece(pieceEatTwo);
-        setPlayerTwoPiece(pieceEatOne);
+          setBox(newBox);
+          setPlayerOnePiece(pieceEatTwo);
+          setPlayerTwoPiece(pieceEatOne);
 
-        setPlayerTwoData({
-          avatar: `${process.env.BASE_URL_API}/uploads/${enemy[0].avatar}`,
-          username: enemy[0].username,
-        });
-        setGameMoves(parseGameMoves(moves));
-        setToast({
-          display: true,
-          event: "valid",
-          title: t("game:toastTitleValidReconnection"),
-          text: t("game:toastTextValidReconnection"),
-        });
+          setPlayerTwoData({
+            avatar: `${process.env.BASE_URL_API}/uploads/${enemy[0].avatar}`,
+            username: enemy[0].username,
+          });
+          setGameMoves(parseGameMoves(moves));
+          setToast({
+            display: true,
+            event: "valid",
+            title: t("game:toastTitleValidReconnection"),
+            text: t("game:toastTextValidReconnection"),
+          });
 
-        setTimerOne(timerPlayerOne);
-        setTimerTwo(timerPlayerTwo);
-        setTurn(turn);
-      });
+          setTimerOne(timerPlayerOne);
+          setTimerTwo(timerPlayerTwo);
+          setTurn(turn);
+        }
+      );
 
       socket.on("game:surrender", () => {
         setDisplayModal(true);
@@ -364,18 +394,97 @@ export default function Game({ locale }) {
   }, []);
 
   return (
-    <Page title={t("game:metaTitle")} auth={auth} toast={toast} handleToastClick={handleToastClick} locale={locale} language={language}>
+    <Page
+      title={t("game:metaTitle")}
+      auth={auth}
+      toast={toast}
+      handleToastClick={handleToastClick}
+      locale={locale}
+      language={language}
+    >
       {/*TODO: webcam not done*/}
       {/* <WebcamClient displayWebcam={displayWebcam} setDisplayWebcam={setDisplayWebcam} handleClickWebcam={handleClickWebcam} /> */}
-      <BtnSpeech handleClickSpeech={handleClickSpeech} listening={listening} />
+      {/* <BtnSpeech handleClickSpeech={handleClickSpeech} listening={listening} /> */}
       <div className="section-chess-main">
         <Section chess>
-          <GameProfile imgSrc={playerTwoData.avatar || "../logo/chess-atp-icon.svg"} imgAlt={`${t("game:altAvatarStart")} ${playerTwoData.username || t("game:avatarNoData")}`} name={playerTwoData.username || t("game:avatarNoData")} time={playerNumber ? (playerNumber !== 1 ? timerOne : timerTwo) : 120} current={turn && turn !== playerNumber} pieces={playerNumber ? (playerNumber !== 1 ? playerTwoPiece : playerOnePiece) : []} />
-          <Grid box={box} setBox={setBox} turn={turn} setTurn={setTurn} playerOnePiece={playerOnePiece} setPlayerOnePiece={setPlayerOnePiece} playerTwoPiece={playerTwoPiece} setPlayerTwoPiece={setPlayerTwoPiece} timerOne={timerOne} setTimerOne={setTimerOne} timerTwo={timerTwo} setTimerTwo={setTimerTwo} displayModal={displayModal} setDisplayModal={setDisplayModal} displayLoader={displayLoader} socket={socket} playerNumber={playerNumber} playerOneData={playerOneData} playerTwoData={playerTwoData} setToast={setToast} gameMoves={gameMoves} setGameMoves={setGameMoves} waitingTime={waitingTime} result={result} setResult={setResult} booleanModal={booleanModal} setBooleanModal={setBooleanModal} />
-          <GameProfile imgSrc={playerOneData.avatar || "../logo/chess-atp-icon.svg"} imgAlt={`${t("game:altAvatarStart")} ${playerOneData.username || t("game:avatarCurrentNoData")}`} name={playerOneData.username || t("game:avatarCurrentNoData")} time={playerNumber ? (playerNumber === 1 ? timerOne : timerTwo) : 120} current={turn && turn === playerNumber} pieces={playerNumber ? (playerNumber === 1 ? playerTwoPiece : playerOnePiece) : []} />
+          <GameProfile
+            imgSrc={playerTwoData.avatar || "../logo/chess-atp-icon.svg"}
+            imgAlt={`${t("game:altAvatarStart")} ${
+              playerTwoData.username || t("game:avatarNoData")
+            }`}
+            name={playerTwoData.username || t("game:avatarNoData")}
+            time={
+              playerNumber ? (playerNumber !== 1 ? timerOne : timerTwo) : 120
+            }
+            current={turn && turn !== playerNumber}
+            pieces={
+              playerNumber
+                ? playerNumber !== 1
+                  ? playerTwoPiece
+                  : playerOnePiece
+                : []
+            }
+          />
+          <Grid
+            box={box}
+            setBox={setBox}
+            turn={turn}
+            setTurn={setTurn}
+            playerOnePiece={playerOnePiece}
+            setPlayerOnePiece={setPlayerOnePiece}
+            playerTwoPiece={playerTwoPiece}
+            setPlayerTwoPiece={setPlayerTwoPiece}
+            timerOne={timerOne}
+            setTimerOne={setTimerOne}
+            timerTwo={timerTwo}
+            setTimerTwo={setTimerTwo}
+            displayModal={displayModal}
+            setDisplayModal={setDisplayModal}
+            displayLoader={displayLoader}
+            socket={socket}
+            playerNumber={playerNumber}
+            playerOneData={playerOneData}
+            playerTwoData={playerTwoData}
+            setToast={setToast}
+            gameMoves={gameMoves}
+            setGameMoves={setGameMoves}
+            waitingTime={waitingTime}
+            result={result}
+            setResult={setResult}
+            booleanModal={booleanModal}
+            setBooleanModal={setBooleanModal}
+          />
+          <GameProfile
+            imgSrc={playerOneData.avatar || "../logo/chess-atp-icon.svg"}
+            imgAlt={`${t("game:altAvatarStart")} ${
+              playerOneData.username || t("game:avatarCurrentNoData")
+            }`}
+            name={playerOneData.username || t("game:avatarCurrentNoData")}
+            time={
+              playerNumber ? (playerNumber === 1 ? timerOne : timerTwo) : 120
+            }
+            current={turn && turn === playerNumber}
+            pieces={
+              playerNumber
+                ? playerNumber === 1
+                  ? playerTwoPiece
+                  : playerOnePiece
+                : []
+            }
+          />
         </Section>
         <Section chess>
-          <ChessTemplate handleNewGameClick={handleNewGameClick} gameMoves={gameMoves} currentNav={currentNav} setCurrentNav={setCurrentNav} handleCancelGameClick={handleCancelGameClick} playerOneData={playerOneData} setToast={setToast} handleEqualityClick={handleEqualityClick} handleSurrenderClick={handleSurrenderClick} />
+          <ChessTemplate
+            handleNewGameClick={handleNewGameClick}
+            gameMoves={gameMoves}
+            currentNav={currentNav}
+            setCurrentNav={setCurrentNav}
+            handleCancelGameClick={handleCancelGameClick}
+            playerOneData={playerOneData}
+            setToast={setToast}
+            handleEqualityClick={handleEqualityClick}
+            handleSurrenderClick={handleSurrenderClick}
+          />
         </Section>
       </div>
     </Page>
